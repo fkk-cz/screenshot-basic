@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --config client.config.js && webpack --config server.config.js"
   },
   "author": "",
   "license": "MIT",
@@ -27,5 +27,8 @@
     "typescript": "3.2.2",
     "uuid": "^3.3.2",
     "webpack": "4.28.4"
+  },
+  "devDependencies": {
+    "webpack-cli": "3.3.11"
   }
 }
