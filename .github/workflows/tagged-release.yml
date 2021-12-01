@@ -6,20 +6,16 @@ name: Screenshot Basic Release
 on:
   push:
     tags:
-      - "v*"
+      - "*"
 
 jobs:
-  build:
+  create_release:
     runs-on: ubuntu-latest
-
-    outputs:
-      VERSION_TAG: ${{ steps.get_version_tag.outputs.VERSION_TAG }}
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
     - name: Get Version Tag
@@ -30,9 +26,7 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '14.x'
-
-    - name: Install tools
-      run: sudo apt install zip
+        cache: 'yarn'
 
     - name: Install dependencies
       run: yarn
@@ -40,21 +34,16 @@ jobs:
     - name: Run build
       run: yarn build
 
-    - uses: actions/checkout@master
-    - name: Archive Release
-      uses: thedoctor0/zip-release@master
-      with:
-        type: 'zip'
-        filename: 'screenshot-basic.zip'
-        exclusions: '*.git* /*node_modules/* .editorconfig /*src/* /*ui/* *.config.js *.json *.lock .yarn.installed'
+    - name: Bundle files
+      run: cd dist && zip -r ../screenshot-basic.zip .
 
     - name: Create release
       uses: "marvinpinto/action-automatic-releases@latest"
       id: auto_release
       with:
-        repo_token: "${{ secrets.REPO_TOKEN }}"
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
         prerelease: false
-        title: "Screenshot Basic | ${{ needs.build.outputs.VERSION_TAG }}"
+        title: "Screenshot Basic | ${{ steps.get_version_tag.outputs.VERSION_TAG }}"
         files: screenshot-basic.zip
 
 
