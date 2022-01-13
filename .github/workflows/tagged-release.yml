@@ -35,7 +35,7 @@ jobs:
       run: yarn build
 
     - name: Bundle files
-      run: zip screenshot-basic.zip dist fxmanifest.lua
+      run: zip screenshot-basic.zip -r dist fxmanifest.lua
 
     - name: Create release
       uses: "marvinpinto/action-automatic-releases@latest"
