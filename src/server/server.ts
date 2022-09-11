@@ -1,6 +1,6 @@
 import { setHttpCallback } from '@citizenfx/http-wrapper';
 
-import { v4 } from 'uuid/v4';
+import { v4 } from 'uuid/dist';
 import * as fs from 'fs';
 import * as Koa from 'koa';
 import * as Router from 'koa-router';

@@ -17,7 +17,8 @@
         "types": [
             "@citizenfx/server",
             "@citizenfx/client",
-            "node"
+            "node",
+            "uuid"
         ],
         "moduleResolution": "node"
     },
